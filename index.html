@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StartScope — Business Research & Analysis</title>
+<style>
+  :root{
+    --navy:#1B3A5C;
+    --navy-light:#284d78;
+    --teal:#2EC4B6;
+    --gold:#FF9F1C;
+    --paper:#F7F8FA;
+    --ink:#1F2937;
+    --ink-soft:#5B6B7C;
+    --line:#E1E6EB;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family: Calibri, 'Carlito', 'Segoe UI', Arial, sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+  }
+  a{color:inherit; text-decoration:none;}
+
+  /* ---------- running header ---------- */
+  header.site-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--navy);
+    border-bottom:3px solid var(--gold);
+  }
+  .header-inner{
+    max-width:1100px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px;
+  }
+  .brand{
+    color:#fff; font-size:20px; letter-spacing:0.5px;
+    display:flex; align-items:baseline; gap:8px;
+  }
+  .brand span{color:var(--teal); font-weight:bold;}
+  nav ul{list-style:none; display:flex; gap:32px;}
+  nav a{color:#EAF1F8; font-size:15px; transition:color .15s;}
+  nav a:hover{color:var(--gold);}
+
+  /* ---------- hero / cover page ---------- */
+  .cover{
+    background:var(--navy);
+    color:#fff;
+    padding:100px 32px 90px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0;
+    height:6px;
+    background:linear-gradient(90deg, var(--teal) 0%, var(--gold) 100%);
+  }
+  .cover-inner{max-width:800px; margin:0 auto; text-align:center;}
+  .cover-eyebrow{
+    color:var(--teal); text-transform:uppercase; letter-spacing:3px;
+    font-size:13px; margin-bottom:18px;
+  }
+  .cover h1{
+    font-size:48px; font-weight:bold; margin-bottom:14px;
+  }
+  .cover-tagline{
+    color:var(--gold); font-size:20px; margin-bottom:26px;
+  }
+  .cover p.lede{
+    color:#D7E2EC; font-size:17px; max-width:600px; margin:0 auto 34px;
+  }
+  .cover-ctas{display:flex; gap:16px; justify-content:center;}
+  .btn{
+    display:inline-block; padding:13px 28px; border-radius:2px;
+    font-size:15px; font-weight:bold; letter-spacing:0.3px;
+    transition:opacity .15s;
+  }
+  .btn:hover{opacity:0.88;}
+  .btn-primary{background:var(--gold); color:var(--navy);}
+  .btn-outline{border:1.5px solid var(--teal); color:var(--teal);}
+
+  /* ---------- section shell ---------- */
+  section{max-width:1000px; margin:0 auto; padding:80px 32px;}
+  .section-head{margin-bottom:44px;}
+  .section-eyebrow{
+    color:var(--teal); text-transform:uppercase; letter-spacing:2.5px;
+    font-size:12.5px; font-weight:bold; margin-bottom:8px;
+  }
+  .section-head h2{color:var(--navy); font-size:30px;}
+  .section-head p{color:var(--ink-soft); margin-top:10px; max-width:640px;}
+
+  /* ---------- TOC-style nav strip (About/Services) ---------- */
+  .toc-list{border-top:1px solid var(--line);}
+  .toc-item{
+    display:flex; align-items:baseline; gap:14px;
+    padding:22px 0; border-bottom:1px solid var(--line);
+  }
+  .toc-item .toc-name{
+    color:var(--navy); font-size:17px; font-weight:bold; white-space:nowrap;
+  }
+  .toc-dots{
+    flex:1; border-bottom:2px dotted #C6CDD4; position:relative; top:-6px;
+  }
+  .toc-desc{color:var(--ink-soft); font-size:14.5px; max-width:420px; text-align:right;}
+
+  /* ---------- about / narrative block ---------- */
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:start;}
+  .about-grid h3{color:var(--navy); font-size:20px; margin-bottom:12px;}
+  .about-grid p{color:var(--ink-soft); font-size:15.5px;}
+  .callout{
+    border-left:4px solid var(--gold);
+    background:#fff;
+    padding:20px 24px;
+    font-size:15px;
+    color:var(--ink);
+  }
+
+  /* ---------- portfolio ---------- */
+  .portfolio-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .doc-card{
+    background:#fff; border:1px solid var(--line); border-radius:4px;
+    overflow:hidden; display:flex; flex-direction:column;
+  }
+  .doc-card-header{
+    background:var(--navy); color:#fff; padding:22px 22px 18px;
+    border-bottom:3px solid var(--teal);
+  }
+  .doc-tag{
+    font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--teal); margin-bottom:8px;
+  }
+  .doc-card-header h3{font-size:19px; line-height:1.3;}
+  .doc-card-body{padding:20px 22px; flex:1; display:flex; flex-direction:column;}
+  .doc-card-body p{color:var(--ink-soft); font-size:14.5px; flex:1; margin-bottom:18px;}
+  .doc-link{
+    display:inline-flex; align-items:center; gap:8px;
+    color:var(--navy); font-weight:bold; font-size:14.5px;
+    border:1.5px solid var(--navy); padding:10px 18px;
+    width:fit-content; border-radius:2px; transition:all .15s;
+  }
+  .doc-link:hover{background:var(--navy); color:#fff;}
+
+  /* ---------- closing / prepared-by page ---------- */
+  .closing{
+    background:var(--navy); color:#fff; text-align:center;
+    padding:90px 32px;
+    position:relative;
+  }
+  .closing::before{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:6px;
+    background:linear-gradient(90deg, var(--gold) 0%, var(--teal) 100%);
+  }
+  .closing-mark{
+    font-size:13px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--gold); margin-bottom:18px;
+  }
+  .closing h2{font-size:30px; margin-bottom:14px;}
+  .closing p{color:#D7E2EC; max-width:480px; margin:0 auto 32px; font-size:15.5px;}
+  .contact-row{
+    display:flex; justify-content:center; gap:40px; flex-wrap:wrap;
+    font-size:15px; color:#EAF1F8;
+  }
+  .contact-row a{color:var(--teal);}
+
+  /* ---------- footer ---------- */
+  footer{
+    background:#12283F; color:#8CA0B4; text-align:center;
+    padding:18px 32px; font-size:12.5px;
+  }
+
+  @media (max-width:720px){
+    .header-inner{flex-direction:column; gap:14px; padding:16px;}
+    nav ul{gap:18px; flex-wrap:wrap; justify-content:center;}
+    .cover h1{font-size:34px;}
+    .about-grid, .portfolio-grid{grid-template-columns:1fr;}
+    .toc-item{flex-direction:column; gap:6px;}
+    .toc-desc{text-align:left;}
+    .contact-row{flex-direction:column; gap:12px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">Start<span>Scope</span></div>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="cover" id="home" style="padding-top:100px; max-width:none;">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">Business Research & Analysis</div>
+    <h1>StartScope</h1>
+    <div class="cover-tagline">Clear research. Sharper decisions.</div>
+    <p class="lede">
+      I build consulting-grade market research, competitor analysis, and industry
+      reports — the kind of structured, data-backed insight founders and teams
+      need before they commit time or capital to a decision.
+    </p>
+    <div class="cover-ctas">
+      <a href="#portfolio" class="btn btn-primary">View portfolio</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="section-head">
+    <div class="section-eyebrow">What I do</div>
+    <h2>Services</h2>
+    <p>Every engagement follows the same standard: primary and secondary research, structured analysis, and a polished written deliverable — not a slide of bullet points.</p>
+  </div>
+
+  <div class="toc-list">
+    <div class="toc-item">
+      <div class="toc-name">Market research</div>
+      <div class="toc-dots"></div>
+      <div class="toc-desc">Sizing, trends, and demand analysis for a market or category</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-name">Competitor analysis</div>
+      <div class="toc-dots"></div>
+      <div class="toc-desc">Positioning, pricing, and product benchmarking across key players</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-name">Industry & SWOT analysis</div>
+      <div class="toc-dots"></div>
+      <div class="toc-desc">Structural forces shaping a sector, and where a business sits within them</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-name">Customer persona development</div>
+      <div class="toc-dots"></div>
+      <div class="toc-desc">Evidence-based profiles of the people a business is actually selling to</div>
+    </div>
+    <div class="toc-item">
+      <div class="toc-name">Business model analysis</div>
+      <div class="toc-dots"></div>
+      <div class="toc-desc">How a company creates, delivers, and captures value — and where it's exposed</div>
+    </div>
+  </div>
+
+  <div style="margin-top:56px;" class="about-grid">
+    <div>
+      <h3>Why StartScope</h3>
+      <p>
+        I'm a student building StartScope from the ground up — research process,
+        branding, and delivery — with a long-term path toward management
+        consulting, equity research, and corporate strategy. Every report is
+        built the way I'd want to receive one: rigorous, well-sourced, and
+        formatted like a professional deliverable, not a school assignment.
+      </p>
+    </div>
+    <div class="callout">
+      Every StartScope report follows a consistent structure: cover page,
+      table of contents, sourced analysis with charts, and a closing summary —
+      so the reports read the same whether it's your first one or your fifth.
+    </div>
+  </div>
+</section>
+
+<section id="portfolio" style="background:#fff;">
+  <div class="section-head">
+    <div class="section-eyebrow">Recent work</div>
+    <h2>Portfolio</h2>
+    <p>Sample reports produced end-to-end — research, analysis, charting, and design.</p>
+  </div>
+
+  <div class="portfolio-grid">
+    <div class="doc-card">
+      <div class="doc-card-header">
+        <div class="doc-tag">Market Research</div>
+        <h3>Pickleball Courts: Market Opportunity Report</h3>
+      </div>
+      <div class="doc-card-body">
+        <p>
+          An assessment of the pickleball courts business opportunity in India —
+          market sizing, demand drivers, and a view on viability, backed by
+          charted data.
+        </p>
+        <a class="doc-link" href="portfolio/pickleball-courts-market-report.pdf" target="_blank" rel="noopener">
+          View report (PDF) →
+        </a>
+      </div>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-card-header">
+        <div class="doc-tag">Competitor Analysis</div>
+        <h3>Indian Protein Powder Market: Competitor Analysis</h3>
+      </div>
+      <div class="doc-card-body">
+        <p>
+          A competitive breakdown of the Indian protein powder category —
+          positioning, pricing, and product benchmarking across major brands.
+        </p>
+        <a class="doc-link" href="portfolio/protein-powder-competitor-analysis.pdf" target="_blank" rel="noopener">
+          View report (PDF) →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="closing" id="contact" style="max-width:none;">
+  <div class="closing-mark">Prepared by StartScope</div>
+  <h2>Let's talk about your research need</h2>
+  <p>Whether it's a market study, a competitor teardown, or a full industry
+     analysis — reach out and I'll scope it with you.</p>
+  <div class="contact-row">
+    <span>✉ <a href="mailto:raghavkhanna87@icloud.com">raghavkhanna87@icloud.com</a></span>
+    <span>☎ 8168661959</span>
+  </div>
+</section>
+
+<footer>
+  StartScope — Business Research & Analysis · © 2026
+</footer>
+
+</body>
+</html>
